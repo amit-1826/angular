@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { interval, Observable, Observer, Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -26,10 +27,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       let count = 0;
       setInterval(() => {
 
-        if (count == 2) {
+        /* if (count == 2) {
           observer.complete();
-        }
-        if (count > 3) {
+        } */
+        if (count > 5) {
           observer.error('This is any error, bro.!!');
         }
         observer.closed.valueOf();
@@ -38,10 +39,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }, 1000)
     })
 
-    this.subscriber = firstCustomObservable.subscribe((count) => {
-      console.log(count);
-    }, (error) => {
 
+
+    this.subscriber = firstCustomObservable.pipe(filter((data) => {
+      return data > 0;
+    }),map((data) => {
+      return 'Round' + data;
+    })).subscribe((count) => {
+      console.log(count);
+    }, (error: any) => {
       // when an error is thrown it does not mean the observable is completed, its just cancelled
 
       console.log('error:', error);
