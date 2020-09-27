@@ -7,6 +7,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  defaultSecretQuestion = 'teacher';
+  answer = '';
+  genders: Array<string> = ['male', 'female'];
   suggestUserName() {
     const suggestedName = 'Superuser';
   }

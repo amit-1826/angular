@@ -2,26 +2,39 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <div id="user-data">
+        <div id="user-data" ngModelGroup="userData" #userData="ngModelGroup">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" class="form-control" ngModel name="username" required>
-            <div class="text-danger" *ngIf="f.controls.username && f.controls.username.touched && f.controls.username.errors && f.controls.username.errors.required">Name is required</div>
+            <input type="text" id="username" class="form-control" ngModel name="username" required #username="ngModel">
+            <div class="text-danger" *ngIf="username.touched && username.errors && username.errors.required">Name is required</div>
           </div>
           <button class="btn btn-default" type="button">Suggest an Username</button>
           <div class="form-group">
             <label for="email">Mail</label>
-            <input type="email" id="email" class="form-control" ngModel name="email" required email>
-            <div class="text-danger" *ngIf="f.controls.email && f.controls.email.touched && f.controls.email.errors && f.controls.email.errors.required">Email is required</div>
-            <div class="text-danger" *ngIf="f.controls.email && f.controls.email.errors && f.controls.email.errors.email">Enter valid email</div>
+            <input type="email" id="email" class="form-control" ngModel name="email" required email #email="ngModel">
+            <div class="text-danger" *ngIf="email && email.touched && email.errors && email.errors.required">Email is required</div>
+            <div class="text-danger" *ngIf="email.errors && email.errors.email">Enter valid email</div>
           </div>
         </div>
+        <p class="text-dander" *ngIf="userData.invalid && userData.touched">User data is invalid.!!</p>
         <div class="form-group">
           <label for="secret">Secret Questions</label>
-          <select id="secret" class="form-control" ngModel name="secret">
+          <!-- [ngModel] will set default values from the component property -->
+          <select id="secret" class="form-control" [ngModel]="defaultSecretQuestion" name="secret">
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
+        </div>
+        <div class="form-group">
+          <textarea name="answer" class="form-control" [(ngModel)]="answer" rows="3"></textarea>
+          <span>Your answer is: {{answer}}</span>
+        </div>
+        <div class="form-group">
+          <div class="radio">
+            <label *ngFor="let gender of genders">
+              <input type="radio" name="gender" ngModel [value]="gender"> {{gender}}
+            </label>
+          </div>
         </div>
         <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Submit</button>
       </form>
