@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- Add a Form with the following Inputs (and Validators)
+           1) Mail address (should not be empty and should be an email address)
+           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+              Set "Advanced" as Default
+           3) A Password field (should not be empty)
+           4) A Submit Button
+
+           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+
+           Upon submitting the form, you should simply print the Value of the Form to the Console.
+           Optionally, display it in your template.
+      -->
+      <div class="m-t-4">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div ngModelGroup="userData" #userData="ngModelGroup">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input class="form-control" id="email" type="text" name="email" ngModel required email #email="ngModel">
+              <span class="text-danger" *ngIf="email.touched && email.errors && email.errors.required">Email address is required.!</span>
+              <span class="text-danger" *ngIf="email.touched && email.errors && email.errors.email">Please enter valid email.!</span>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input class="form-control" id="password" type="password" name="password" ngModel required #password="ngModel" />
+              <span class="text-danger" *ngIf="password.touched && password.errors && password.errors.required">Password is required.!</span>
+            </div>
+            <span class="text-danger" *ngIf="userData.touched && userData.invalid">User data is invalid.!</span>
+          </div>
+        <div class="form-group">
+          <label for="subscriptions">Subscriptions</label>
+          <select class="form-control" name="subscription" id="subscription" [ngModel]="defaultSubscription">
+            <option [value]="subscription" *ngFor="let subscription of subscriptions">{{subscription}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      </div>
+      <hr/>
+      <div *ngIf="formSubmitted">
+        <h3>Your data: </h3>
+        <p>Email: {{signUpForm.userData.email}}</p>
+        <p>Password: {{signUpForm.userData.password}}</p>
+        <p>Subscription: {{signUpForm.subscription}}</p>
+      </div>
+    </div>
+  </div>
+</div>
