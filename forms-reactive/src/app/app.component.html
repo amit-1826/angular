@@ -10,7 +10,10 @@
               id="username"
               formControlName="username"
               class="form-control">
-              <span class="text-danger" *ngIf="signUpForm.get('userData.username').invalid && signUpForm.get('userData.username').touched">Please enter valid username.!</span>
+              <span class="text-danger" *ngIf="signUpForm.get('userData.username').invalid && signUpForm.get('userData.username').touched">
+                <span *ngIf="signUpForm.get('userData.username').errors['isForbidden']">This name is forbidden.!</span>
+                <span *ngIf="signUpForm.get('userData.username').errors['required']">Username is required.!</span>
+              </span>
           </div>
           <div class="form-group">
             <label for="email">email</label>
@@ -19,7 +22,10 @@
               id="email"
               formControlName="email"
               class="form-control">
-              <span class="text-danger" *ngIf="signUpForm.get('userData.email').invalid && signUpForm.get('userData.email').touched">Please enter valid email.!</span>
+              <span class="text-danger" *ngIf="signUpForm.get('userData.email').invalid && signUpForm.get('userData.email').touched">
+                <span *ngIf="signUpForm.get('userData.email').errors['isEmailForbidden']">This domain is forbidden.!</span>
+                <span *ngIf="signUpForm.get('userData.email').errors['required']">Email is required.!</span>
+              </span>
           </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
@@ -38,6 +44,8 @@
           </div>
         </div>
         <button class="btn btn-primary" type="submit" [disabled]="signUpForm.invalid">Submit</button>
+        <button class="btn btn-info" type="button" (click)="onReset()">Reset</button>
+        <button class="btn btn-warning" type="button" (click)="onLoadDefault()">Load default</button>
       </form>
     </div>
   </div>
