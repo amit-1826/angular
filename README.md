@@ -1,2 +1,2 @@
 # angular
-Angular crash course with detailed comments
+A detailed angular completed guide by maximillian
