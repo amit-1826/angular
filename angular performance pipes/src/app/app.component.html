@@ -1,0 +1,6 @@
+<div>
+  <h1>Users: </h1>
+  <div *ngFor="let user of usrService.users">
+    <span>{{user.name}} - {{user.userId | theory}}</span>
+  </div>
+</div>
